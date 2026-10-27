@@ -1,0 +1,282 @@
+/* =========================================================
+   style.css  —  colours and look of SWS Suraksha Bot
+   Change the colours here and the whole app changes.
+   ========================================================= */
+:root {
+  --navy:    #12305C;   /* trust colour (header) */
+  --caution: #F4C430;   /* warning yellow */
+  --scam:    #C62828;   /* red = scam */
+  --safe:    #1E7A4C;   /* green = safe */
+  --help:    #B45309;   /* orange = act now */
+  --paper:   #EEF1F5;   /* page background */
+  --card:    #FFFFFF;   /* bubbles */
+  --ink:     #1A2233;   /* text */
+  --soft:    #5B6475;   /* small text */
+  --line:    #D5DBE4;   /* borders */
+
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Dark mode for phones set to dark */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0F1724; --card: #1A2436; --ink: #E8ECF2; --soft: #9AA5B8; --line: #2C3950;
+  }
+}
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Mukta", "Noto Sans Gurmukhi", system-ui, sans-serif;
+  font-size: 1.05rem;
+}
+
+/* The app is one tall column, like a phone */
+.app {
+  height: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  background: var(--paper);
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+
+/* ---------- Top bar ---------- */
+.topbar { background: var(--navy); color: #fff; }
+.bot-logo { width: 46px; height: 46px; flex-shrink: 0; }
+.app-name {
+  font-family: "Baloo 2", "Baloo Paaji 2", sans-serif;
+  font-weight: 800;
+  font-size: 1.4rem;
+}
+.app-sub { color: var(--caution); font-size: 0.9rem; }
+.school-logo { height: 58px; width: 58px; background: #fff; border-radius: 50%; padding: 1px; flex-shrink: 0; }
+
+/* ---------- Language buttons ---------- */
+.langbar { background: var(--card); border-bottom: 1px solid var(--line); }
+.lang-btn {
+  border: 1.5px solid var(--navy);
+  color: var(--navy);
+  border-radius: 999px;
+  padding: 2px 14px;
+  font-weight: 600;
+}
+.lang-btn.active { background: var(--navy); color: #fff; }
+
+/* ---------- Warning strip ---------- */
+.warning {
+  background: var(--caution);
+  color: #1A1A1A;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border-bottom: 3px solid #1A1A1A;
+}
+
+/* ---------- Chat area ---------- */
+.chat { overflow-y: auto; }
+
+.msg { display: flex; margin-bottom: 12px; }
+.msg.user { justify-content: flex-end; }
+
+/* School logo beside bot messages */
+.avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: #fff; border: 1px solid var(--line);
+  margin-right: 8px; flex-shrink: 0; align-self: flex-start;
+}
+
+.bubble {
+  max-width: 86%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  line-height: 1.5;
+}
+.bot .bubble {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-top-left-radius: 4px;
+}
+.user .bubble {
+  background: var(--navy);
+  color: #fff;
+  border-top-right-radius: 4px;
+}
+.bubble p { margin: 0 0 6px; }
+
+/* The PIN/OTP reminder inside the chat */
+.bubble.pin-warning { background: var(--caution); color: #1A1A1A; border-color: #1A1A1A; font-weight: 600; }
+.bubble img { max-width: 100%; border-radius: 10px; display: block; }
+
+/* ---------- Scam card ---------- */
+.card-title {
+  font-family: "Baloo 2", "Baloo Paaji 2", sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin: 4px 0 8px;
+}
+
+/* The STAMP — the most important thing on screen */
+.stamp {
+  display: inline-block;
+  font-family: "Baloo 2", "Baloo Paaji 2", sans-serif;
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+  padding: 0 14px;
+  border: 4px double currentColor;
+  border-radius: 6px;
+  transform: rotate(-5deg);
+  animation: stampIn 0.35s ease-out;
+}
+.stamp.scam { color: var(--scam); }
+.stamp.safe { color: var(--safe); }
+.stamp.help { color: var(--help); }
+
+@keyframes stampIn {
+  from { transform: rotate(-5deg) scale(1.8); opacity: 0; }
+  to   { transform: rotate(-5deg) scale(1);   opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stamp { animation: none; }
+}
+
+.helpline {
+  margin-top: 8px !important;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(198, 40, 40, 0.08);
+  font-weight: 600;
+}
+.helpline a { color: var(--scam); }
+
+/* Changing first line and "Did you know?" fact on each card */
+.opener { font-weight: 600; margin-bottom: 4px !important; }
+.fact {
+  margin-top: 8px !important;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(18, 48, 92, 0.07);
+  font-size: 0.92em;
+}
+
+/* Safety tip shown on every scam card */
+.tip {
+  margin-top: 8px !important;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(244, 196, 48, 0.18);
+  font-size: 0.92em;
+}
+
+/* Listen + translate buttons under each bot reply */
+.tools { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.tools button {
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--soft);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  padding: 1px 10px;
+}
+.tools button.on { border-color: var(--navy); color: var(--navy); font-weight: 600; }
+
+/* Typing dots */
+.dots span {
+  display: inline-block; width: 7px; height: 7px; margin: 0 2px;
+  background: var(--soft); border-radius: 50%;
+  animation: blink 1s infinite;
+}
+.dots span:nth-child(2) { animation-delay: 0.2s; }
+.dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes blink { 50% { opacity: 0.2; } }
+
+/* ---------- Quick buttons (chips) ---------- */
+.chips-wrap { border-top: 1px solid var(--line); background: var(--card); }
+.chips-label { color: var(--soft); }
+.chips { overflow-x: auto; }
+.chip {
+  white-space: nowrap;
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.9rem;
+}
+.chip:hover { border-color: var(--navy); }
+
+/* ---------- Typing bar ---------- */
+.inputbar { background: var(--card); border-top: 1px solid var(--line); }
+.icon-btn { font-size: 1.2rem; border: 1px solid var(--line); background: var(--paper); }
+.icon-btn.listening { background: var(--scam); color: #fff; }
+.send-btn { background: var(--navy); color: #fff; font-size: 1.2rem; }
+.send-btn:hover { background: #0B2246; color: #fff; }
+#userInput { background: var(--card); color: var(--ink); border-color: var(--line); }
+
+/* Clear focus outline for keyboard users */
+button:focus-visible, input:focus-visible, a:focus-visible {
+  outline: 3px solid var(--caution);
+  outline-offset: 2px;
+}
+
+/* ---------- History + Clear ---------- */
+.tool-btn {
+  border: 1.5px solid var(--line);
+  color: var(--ink);
+  background: var(--paper);
+  border-radius: 999px;
+  padding: 2px 12px;
+  font-weight: 600;
+}
+.tool-btn:hover { border-color: var(--navy); }
+
+.confirm-box { background: #FDECEC; color: #1A1A1A; border-bottom: 1px solid var(--scam); font-weight: 600; }
+.confirm-box[hidden], .history-panel[hidden] { display: none !important; }
+
+/* The history panel covers the chat area */
+.history-panel {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 10;
+  background: var(--paper);
+  overflow-y: auto;
+}
+.history-title {
+  font-family: "Baloo 2", "Baloo Paaji 2", sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+.history-item { text-align: left; background: var(--card); color: var(--ink); border-color: var(--line); }
+.history-item small { color: var(--soft); display: block; }
+.history-empty { color: var(--soft); }
+.history-item.active-chat { border-left: 4px solid var(--navy); }
+
+/* ---------- Pop-up message ---------- */
+.popup {
+  position: fixed;
+  left: 50%;
+  bottom: calc(150px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  z-index: 50;
+  width: max-content;
+  max-width: 90vw;
+  text-align: center;
+  background: var(--navy);
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(18, 48, 92, 0.35);
+  animation: popIn 0.25s ease-out;
+}
+.popup[hidden] { display: none; }
+@keyframes popIn {
+  from { opacity: 0; transform: translate(-50%, 12px); }
+  to   { opacity: 1; transform: translate(-50%, 0); }
+}
+@media (prefers-reduced-motion: reduce) { .popup { animation: none; } }
